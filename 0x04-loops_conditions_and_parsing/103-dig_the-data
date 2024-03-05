@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 # this script sorts access log files displaying IP address with their status codes
-LOG_FILE="./apache-access.log"
-if [[ ! -f "$LOG_FILE" ]]
-then
-    echo "Error: apache-access log file does not exist"
-    exit 1
+
+# Path to the Apache log file
+LOG_FILE="./apache-access.log"  # Update this with the actual path to your Apache log file
+
+# Check if the file exists
+if [ ! -f "$LOG_FILE" ]; then
+  echo "Error: Apache log file does not exist."
+  exit 1
 fi
 
-
+# Use awk to group by IP and HTTP status code, count occurrences, and format the output
 awk '{print $1, $9}' "$LOG_FILE" | sort | uniq -c | sort -rn | awk '{print $1, $2, $3}'
+
