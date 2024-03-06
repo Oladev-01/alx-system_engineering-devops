@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# this script displays the PID and the name of the program to which each sockets belong to
+# shows only listening sockets
+
+
+
+# Get the list of listening ports along with the associated PID and program name
+sudo netstat -tulnp | grep 'LISTEN'
+
+# Explanation:
+# - netstat: displays network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
+# - -t: show TCP connections
+# - -u: show UDP connections
+# - -l: show only listening sockets
+# - -n: show numerical addresses instead of resolving hostnames
+# - -p: show the PID and name of the program to which each socket belongs
+# - grep 'LISTEN': filter the output to show only listening sockets
+
+# Note: This script needs to be run with sudo to display the PID and program name
