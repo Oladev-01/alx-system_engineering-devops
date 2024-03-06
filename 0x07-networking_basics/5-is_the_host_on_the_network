@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # this script runs ping on an ip address five times
-if [[ $# -ne 1 ]]
+if [[ $# -eq 0 ]]
 then
     echo "Usage: $0 {IP_ADDRESS}"
     exit 1
