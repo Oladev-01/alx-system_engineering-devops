@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# this script listens on the port 98
+if [[ "$EUID" -ne 0 ]]
+then
+    echo "run this script as root"
+    exit 1
+fi
+nc -l -p 98
