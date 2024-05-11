@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# this script displays PIDs containing the word 'Bash'
+# shellcheck disable=SC2009
+ps auxf | grep bash

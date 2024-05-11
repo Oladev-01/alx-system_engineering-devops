@@ -28,9 +28,9 @@ In the realm of Linux systems programming, understanding processes and signals i
    - Solution: `1-list_your_processes`
    - Explanation: `defined the command that satisfies the task`
 
-3. **Task 3**: [Description of Task 3]
-   - Solution: `task3_solution.py`
-   - Explanation: `task3_explanation.md`
+3. **Task 2**: [Display PIDs of containing the word 'bash']
+   - Solution: `./2-show_your_bash_pid`
+   - Explanation: `made the command without using pgrep`
 
    _(Add more tasks as necessary)_
 
