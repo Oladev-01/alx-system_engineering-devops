@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# this script displays PIDs for all users, including those with no TTY
+
+ps auxf

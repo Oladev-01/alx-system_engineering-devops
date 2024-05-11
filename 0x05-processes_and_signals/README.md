@@ -20,13 +20,13 @@ In the realm of Linux systems programming, understanding processes and signals i
 
 ## Tasks
 
-1. **Task 1**: [Script displaying its PID]
+1. **Task 0**: [Script displaying its PID]
    - Solution: file `0-what-is-my-pid`
    - Explanation: `defined the command for generating PID`
 
-2. **Task 2**: [Description of Task 2]
-   - Solution: `task2_solution.py`
-   - Explanation: `task2_explanation.md`
+2. **Task 1**: [Script that displays PIDs for all users, including those without TTY]
+   - Solution: `1-list_your_processes`
+   - Explanation: `defined the command that satisfies the task`
 
 3. **Task 3**: [Description of Task 3]
    - Solution: `task3_solution.py`
