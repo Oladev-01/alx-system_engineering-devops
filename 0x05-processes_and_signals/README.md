@@ -35,6 +35,9 @@ In the realm of Linux systems programming, understanding processes and signals i
 4. **Task 3**: [Script that displays the PIDs and the word bash]
    - Solution: `./3-show_your_bash_pid_made_easy`
    - Explanation: `use pgrep command`
+5. **Task 4**: [Script that display the sentence 'To infinity and beyond' indefinitely with sleep of 2secs between each loop]
+   - Solution: `4-to_infinity_and_beyond`
+   - Explanation: `Check the file`
 
 ## Usage
 
