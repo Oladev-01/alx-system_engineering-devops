@@ -2,6 +2,7 @@
 # Define the signal handler functions
 # shellcheck disable=SC2009
 sigterm_handler() {
+    rm /var/run/myscript.pid
     echo "I hate the kill command"
 }
 
