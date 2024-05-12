@@ -1,0 +1,8 @@
+#!/usr/bin//env bash
+# this script kills the process of task 4 without using the command 'kill'
+# shellcheck disable=SC2009
+pid="./4-to_infinity_and_beyond"
+
+if [ -e "$pid" ]; then
+    pkill -f $pid
+fi

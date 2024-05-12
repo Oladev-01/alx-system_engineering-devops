@@ -1,4 +1,3 @@
-Certainly! Here's a template for your README file:
 
 ---
 
@@ -41,6 +40,9 @@ In the realm of Linux systems programming, understanding processes and signals i
 6. **Task 5**: [Script to kill the process of task 4]
    - Solution: `5-dont_stop_me_now`
    - Explanation: `check the file`
+7. **Task 6**: [Script to stop the process of task 4 without kill command]
+   - Solution: `6-stop_me_if_you_can`
+   - Explanation: `used pkill -f <proc_name>`
 
 ## Usage
 
@@ -60,5 +62,3 @@ Contributions to this repository are welcome. If you have a solution or an impro
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-Feel free to customize the content and structure of the README according to your preferences and the specifics of the tasks you're working on.
