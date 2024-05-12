@@ -38,6 +38,9 @@ In the realm of Linux systems programming, understanding processes and signals i
 5. **Task 4**: [Script that display the sentence 'To infinity and beyond' indefinitely with sleep of 2secs between each loop]
    - Solution: `4-to_infinity_and_beyond`
    - Explanation: `Check the file`
+6. **Task 5**: [Script to kill the process of task 4]
+   - Solution: `5-dont_stop_me_now`
+   - Explanation: `check the file`
 
 ## Usage
 
