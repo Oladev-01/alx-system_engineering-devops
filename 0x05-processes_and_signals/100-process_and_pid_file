@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Define the signal handler functions
+# shellcheck disable=SC2009
+sigterm_handler() {
+    echo "I hate the kill command"
+}
+
+sigint_handler() {
+    echo "Y U no love me?!"
+    exit 0
+}
+
+sigquit_handler() {
+    rm /var/run/myscript.pid
+    echo "Goodbye!"
+    exit 0
+}
+
+# Trap the signals and associate them with the handler functions
+trap sigterm_handler SIGTERM
+trap sigint_handler SIGINT
+trap sigquit_handler SIGQUIT
+
+# Get the PID of the current process and store it in the file
+echo "$$" > /var/run/myscript.pid
+
+# Display the message indefinitely
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done

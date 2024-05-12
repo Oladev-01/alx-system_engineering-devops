@@ -49,6 +49,13 @@ In the realm of Linux systems programming, understanding processes and signals i
 9. **Task 8**: [script that kills the process of task 7]
    - Solution: `8-beheaded_process`
    - Explanation: `use kill -9`
+10. **Task 9**: [Script that creates the file /var/run/myscript.pid containing its PID.
+Displays To infinity and beyond indefinitely
+Displays I hate the kill command when receiving a SIGTERM signal
+Displays Y U no love me?! when receiving a SIGINT signal
+Deletes the file /var/run/myscript.pid and terminates itself when receiving a SIGQUIT or SIGTERM signal]
+   - Solution: `100-process_and_pid_file`
+   - Explanation: `check the file`
 
 ## Usage
 
