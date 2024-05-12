@@ -43,6 +43,9 @@ In the realm of Linux systems programming, understanding processes and signals i
 7. **Task 6**: [Script to stop the process of task 4 without kill command]
    - Solution: `6-stop_me_if_you_can`
    - Explanation: `used pkill -f <proc_name>`
+8. **Task 7**: [Script that handles SIGTERM and prints 'I am invincible' when a SIGTERM signal is parsed to its process]
+   - Solution: `7-highlander`
+   - Explanation: `trapped the SIGTERM, execting the function that prints 'I am invincible'`
 
 ## Usage
 

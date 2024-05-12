@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# this script prints the sentence 'To infinity and beyond'
+# it prints 'I am invincible anytime it recieves a SIGTERM'
+
+sigterm_handler() {
+    echo "I am invincible!!!";
+}
+
+# Trap SIGTERM signal and call the handler function
+trap 'sigterm_handler' SIGTERM
+while true; do
+    echo "To infinity and beyond";
+    sleep 2;
+done
