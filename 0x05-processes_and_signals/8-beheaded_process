@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# this script kills the process of task 7 
+# shellcheck disable=SC2009
+pid=$(ps -ef | grep "7-highlander" | grep -v grep | awk '{print $2}')
+
+if [ -n "$pid" ]; then
+    kill -9 "$pid";
+fi

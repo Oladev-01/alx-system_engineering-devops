@@ -46,6 +46,9 @@ In the realm of Linux systems programming, understanding processes and signals i
 8. **Task 7**: [Script that handles SIGTERM and prints 'I am invincible' when a SIGTERM signal is parsed to its process]
    - Solution: `7-highlander`
    - Explanation: `trapped the SIGTERM, execting the function that prints 'I am invincible'`
+9. **Task 8**: [script that kills the process of task 7]
+   - Solution: `8-beheaded_process`
+   - Explanation: `use kill -9`
 
 ## Usage
 
