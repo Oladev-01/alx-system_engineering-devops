@@ -32,7 +32,9 @@ In the realm of Linux systems programming, understanding processes and signals i
    - Solution: `./2-show_your_bash_pid`
    - Explanation: `made the command without using pgrep`
 
-   _(Add more tasks as necessary)_
+4. **Task 3**: [Script that displays the PIDs and the word bash]
+   - Solution: `./3-show_your_bash_pid_made_easy`
+   - Explanation: `use pgrep command`
 
 ## Usage
 
