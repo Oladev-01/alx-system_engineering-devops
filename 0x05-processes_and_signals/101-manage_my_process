@@ -11,8 +11,6 @@
 ### END INIT INFO
 # shellcheck disable=SC2009
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-NAME=manage_my_process
-SCRIPTNAME=/etc/init.d/$NAME
 DAEMON=./manage_my_process
 case "$1" in
   start)
