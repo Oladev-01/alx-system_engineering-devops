@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# this script serves as daemon to the `manage_my_process` script by sending command to the script
+### BEGIN INIT INFO
+# Provides:          manage_my_process
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop manage_my_process
+# Description:       Start and stop manage_my_process script
+### END INIT INFO
+# shellcheck disable=SC2009
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+NAME=manage_my_process
+SCRIPTNAME=/etc/init.d/$NAME
+DAEMON=./manage_my_process
+case "$1" in
+  start)
+        $DAEMON start
+        ;;
+  stop)
+        $DAEMON stop
+        ;;
+  restart)
+        $DAEMON restart
+        ;;
+  *)
+        echo "Usage: manage_my_process {start|stop|restart}" >&2
+        exit 3
+        ;;
+esac
+exit 0

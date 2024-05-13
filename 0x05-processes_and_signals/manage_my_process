@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# this script accepts arguments to its executable
+# when the argument is `start`: 
+#   it creates a file containing its PID in /var/run/my_process.pid
+#   Displays manage_my_process started
+# when the argumnet is `stop`: 
+#   Stops manage_my_process
+#   Deletes the file /var/run/my_process.pid
+#   Displays manage_my_process stopped
+# when the argument is `restart`:
+#  Stops manage_my_process
+#   Deletes the file /var/run/my_process.pid
+#   Starts manage_my_process
+#   Creates a file containing its PID in /var/run/my_process.pid
+# shellcheck disable=SC2009
+
+start_process() {
+
+    echo "manage_my_process started"
+    (while true; do
+        echo "I am alive!"
+        sleep 2
+    done) > /tmp/my_process & 
+    echo "$!" > /var/run/my_process.pid
+}
+stop_process() {
+    kill "$(cat /var/run/my_process.pid)" 2>/dev/null
+    rm -f /var/run/my_process.pid
+    echo "manage_my_process stopped"
+}
+
+restart_process() {
+    kill "$(cat /var/run/my_process.pid)" 2>/dev/null
+    rm -f /var/run/my_process.pid
+    (while true; do
+        echo "I am alive!"
+        sleep 2
+    done) > /tmp/my_process & 
+    echo "$!" > /var/run/my_process.pid
+    echo "manage_my_process restarted"
+}
+case "$1" in
+    start)
+        start_process
+        ;;
+    stop)
+        stop_process
+        ;;
+    restart)
+        restart_process
+        ;;
+    *)
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac

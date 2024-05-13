@@ -56,6 +56,9 @@ Displays Y U no love me?! when receiving a SIGINT signal
 Deletes the file /var/run/myscript.pid and terminates itself when receiving a SIGQUIT or SIGTERM signal]
    - Solution: `100-process_and_pid_file`
    - Explanation: `check the file`
+11.   **Task 10**: [creating daemon]
+      - Solution: `manage_my_process, 101-manage_my_process `
+      - Explanation: `check file`
 
 ## Usage
 
