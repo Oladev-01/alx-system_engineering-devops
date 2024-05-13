@@ -23,7 +23,7 @@ case "$1" in
         $DAEMON restart
         ;;
   *)
-        echo "Usage: manage_my_process {start|stop|restart}" >&2
+        echo "Usage: manage_my_process {start|stop|restart}"
         exit 3
         ;;
 esac
