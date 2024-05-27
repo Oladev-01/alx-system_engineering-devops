@@ -2,4 +2,4 @@
 # this script generates a new ssh key fingerprint, saving into a file name "school"
 # and saving the password as being input into the ssh key generation
 
-ssh -t rsa -b 4096 -N "betty" -f "school"
+ssh-keygen -t rsa -b 4096 -N "betty" -f "school"
