@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Define the SSH configuration file path
+SSH_CONFIG_FILE="$HOME/.ssh/config"
+
+# Define the configuration to be added
+CONFIG="
+Host *
+    HostName 18.209.152.56
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
+"
+
+    echo "$CONFIG" >> "$SSH_CONFIG_FILE"
+
+chmod 600 "$SSH_CONFIG_FILE"
+
