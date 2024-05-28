@@ -1,8 +1,7 @@
 # Define the SSH configuration using Puppet
-file { "/home/oladev-01/.ssh/config":
+file { "/etc/ssh/ssh_config ":
     ensure => present,
-    content => "host *
-                  IdentityFile ~/alx-system_engineering-devops/0x0B-ssh/schoolHostName 18.209.152.56
+    content => "  IdentityFile ~/alx-system_engineering-devops/0x0B-ssh/school
                   HostName 18.209.152.56
                   PasswordAuthentication no",}
 
