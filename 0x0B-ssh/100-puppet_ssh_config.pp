@@ -1,8 +1,8 @@
 # Define the SSH configuration using Puppet
-file { "/etc/ssh/ssh_config":
-    ensure => present,
-    content => "host *
-                  IdentityFile ~/alx-system_engineering-devops/0x0B-ssh/school
-                  HostName 18.209.152.56
-                  PasswordAuthentication no",}
+file { '/etc/ssh/ssh_config':
+    ensure  => present,
+    content => template('./ssh_config_temp'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',}
 
