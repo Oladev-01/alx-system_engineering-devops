@@ -1,14 +1,28 @@
-#
-# rules.before
-#
-# Rules that should be run before the ufw command line added rules. Custom
-# rules should be added to one of these chains:
-#   ufw-before-input
-#   ufw-before-output
-#   ufw-before-forward
+#!/bin/bash
 
-# adding a new rule to forwards sockets on port 8080 to port 80
-*nat
-:PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
-COMMIT
+# Define the path to the before.rules file
+UFW_BEFORE_RULES="/etc/ufw/before.rules"
+
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+# Backup the current before.rules file
+cp "$UFW_BEFORE_RULES" "$UFW_BEFORE_RULES.bak"
+
+# Add the NAT rule to forward port 8080 to 80
+# If the rule already exists, it will not be added again
+if ! grep -q "REDIRECT --to-port 80" "$UFW_BEFORE_RULES"; then
+  echo "Adding NAT rule to $UFW_BEFORE_RULES"
+  sed -i '/^# nat Table rules/a *nat\n:PREROUTING ACCEPT [0:0]\n-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80\nCOMMIT\n' "$UFW_BEFORE_RULES"
+else
+  echo "NAT rule already exists in $UFW_BEFORE_RULES"
+fi
+
+# Reload UFW to apply changes
+echo "Reloading ufw"
+ufw reload
+
+echo "Port forwarding from 8080 to 80 has been configured."
