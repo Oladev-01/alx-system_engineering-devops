@@ -31,4 +31,11 @@ if command -v ufw >/dev/null 2>&1; then
     ufw reload
 fi
 
+if ! curl -s -o /dev/null -w "%{http_code}" http://localhost | grep -q "200"; then
+    echo "Nginx is not serving the default page correctly. Exiting."
+    exit 1
+else
+    echo "Nginx is serving the default page correctly on port 80."
+fi
+
 exit 0
