@@ -12,7 +12,7 @@ PID=$(lsof -t -i :80)
 
 if [ -n "$PID" ]; then
   echo "Found process using port 80: PID $PID. Stopping it..."
-  kill -9 $PID
+  kill -9 "$PID"
 else
   echo "No process found using port 80."
 fi
