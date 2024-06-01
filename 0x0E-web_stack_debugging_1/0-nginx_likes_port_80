@@ -1,4 +1,32 @@
-#!/usr/bin/env bash
-# Update package lists
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
+#!/bin/bash
+
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+# Find the process using port 80 and stop it
+echo "Checking for processes using port 80..."
+PID=$(lsof -t -i :80)
+
+if [ -n "$PID" ]; then
+  echo "Found process using port 80: PID $PID. Stopping it..."
+  kill -9 $PID
+else
+  echo "No process found using port 80."
+fi
+
+# Start Nginx
+echo "Starting Nginx..."
+systemctl start nginx
+
+# Check Nginx status
+if systemctl status nginx | grep -q "active (running)"; then
+  echo "Nginx is now running."
+else
+  echo "Failed to start Nginx. Please check the logs for details."
+  exit 1
+fi
+
+exit 0
