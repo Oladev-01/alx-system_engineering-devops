@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# this script installs nginx and updates its config file
+# installing nginx
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get -y install nginx
+fi
+# Hello World file   
+echo "Hello World!" | sudo tee /Hello.txt > /dev/null
+sudo chmod 644 /Hello.txt
+# backup
+sudo mkdir -p /backup/etc/nginx/sites-enabled/default
+sudo cp /etc/nginx/sites-enabled/default /backup/etc/nginx/sites-enabled/default
+# configuring nginx
+sudo sed -i 's|root .*$|root /;|' "/etc/nginx/sites-enabled/default"
+if grep -q "index" "/etc/nginx/sites-enabled/default"; then
+    sed -i 's|index .*$|index Hello.txt;|' "/etc/nginx/sites-enabled/default"
+else
+    sed -i '/root .*$/a\    index Hello.txt;' "/etc/nginx/sites-enabled/default"
+fi
+sudo service nginx reload
