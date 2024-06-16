@@ -1,38 +1,16 @@
 #!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
-# Serve a page that would return a Hello World string
-#
+# this script installs nginx and updates its config file
+# installing nginx
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get -y install nginx
+fi
+# Hello World file   
 
+# Create a new index.html file with "Hello World!" content
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
-#echo -e "Updating and installing Nginx.\n"
-sudo apt-get update -y -qq && \
-         sudo apt-get install nginx -y
+# Ensure Nginx is configured to listen on port 80 (default configuration)
+# Backup the original configuration
 
-#echo -e "\nSetting up some minor stuff.\n"
-
-# starting nginx service
-sudo service nginx start
-
-# allowing nginx on firewall
-sudo ufw allow 'Nginx HTTP'
-#sudo ufw allow '22/tcp'
-#sudo ufw allow '80/tcp'
-#sudo ufw allow '23/tcp'
-
-# Give the user ownership to website files for easy editing
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-# Backup default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-
-# Creating new index
-echo  "Hello World!" > /var/www/html/index.nginx-debian.html
-
-red_conf="   location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n"
-sudo sed -i "/server_name _;/a $red_conf" /etc/nginx/sites-available/default
-# Restarting nginx
-sudo service nginx reload
-
-echo -e "\nCompleted.\n"
+sudo sed -i '/server_name _;/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
+sudo service nginx restart
