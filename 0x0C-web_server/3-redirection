@@ -1,28 +1,10 @@
 #!/usr/bin/env bash
-# configuring the server for redirection
-
+# Script to configure Nginx for redirection
+# Install Nginx if not already installed
 if ! command -v nginx &> /dev/null; then
     sudo apt-get -y install nginx
 fi
+sudo sed -i '/server_name _;/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
 
-# making the redirection
-cat > "/etc/nginx/sites-available/default" <<EOL
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html index.htm;
-
-    server_name _;
-
-    location /redirect_me {
-        return 301 http://example.com/new-page.html;
-    }
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOL
+# Reload Nginx to apply changes
 sudo service nginx reload
