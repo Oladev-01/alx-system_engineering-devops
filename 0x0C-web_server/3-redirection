@@ -16,9 +16,9 @@ sudo service nginx start
 
 # allowing nginx on firewall
 sudo ufw allow 'Nginx HTTP'
-sudo ufw allow '22/tcp'
-sudo ufw allow '80/tcp'
-sudo ufw allow '23/tcp'
+#sudo ufw allow '22/tcp'
+#sudo ufw allow '80/tcp'
+#sudo ufw allow '23/tcp'
 
 # Give the user ownership to website files for easy editing
 sudo chown -R "$USER":"$USER" /var/www/html
@@ -30,12 +30,8 @@ cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.b
 # Creating new index
 echo  "Hello World!" > /var/www/html/index.nginx-debian.html
 
-if ! grep "location /redirect_me" /etc/nginx/sites-available/default; then
-    sudo sed -i '9i\    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
-else
-    sudo sed -i '/location \/redirect_me {/,/}/c\    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }' /etc/nginx/sites-available/default
-fi
-
+red_conf="   location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n"
+sudo sed -i "/server_name _;/a $red_conf" /etc/nginx/sites-available/default
 # Restarting nginx
 sudo service nginx reload
 
