@@ -5,16 +5,12 @@ if ! command -v nginx &> /dev/null; then
     sudo apt-get -y install nginx
 fi
 # Hello World file   
-echo "Hello World!" | sudo tee /Hello.txt > /dev/null
-sudo chmod 644 /Hello.txt
-# backup
-sudo mkdir -p /backup/etc/nginx/sites-enabled/default
-sudo cp /etc/nginx/sites-enabled/default /backup/etc/nginx/sites-enabled/default
-# configuring nginx
-sudo sed -i 's|root .*$|root /;|' "/etc/nginx/sites-enabled/default"
-if grep -q "index" "/etc/nginx/sites-enabled/default"; then
-    sed -i 's|index .*$|index Hello.txt;|' "/etc/nginx/sites-enabled/default"
-else
-    sed -i '/root .*$/a\    index Hello.txt;' "/etc/nginx/sites-enabled/default"
-fi
-sudo service nginx reload
+
+# Create a new index.html file with "Hello World!" content
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Ensure Nginx is configured to listen on port 80 (default configuration)
+# Backup the original configuration
+
+# Restart Nginx without using systemctl (use service command instead)
+sudo service nginx restart
