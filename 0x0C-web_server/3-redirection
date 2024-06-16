@@ -5,6 +5,6 @@ if ! command -v nginx &> /dev/null; then
     sudo apt-get -y install nginx
 fi
 sudo sed -i '/server_name _;/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
-
+sudo ln -s -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled
 # Reload Nginx to apply changes
 sudo service nginx reload
