@@ -6,6 +6,8 @@ if ! command -v nginx &> /dev/null; then
 fi
 
 # making the redirection
-sudo sed '/server_name _/a location /redirect_me {return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;}\n' "/etc/nginx/sites-enabled/default"
+sudo sed '/server_name _/a location /redirect_me {
+        return 301 https://example.com/new-page;
+    }' "/etc/nginx/sites-enabled/default"
 
 sudo service nginx reload
