@@ -5,11 +5,11 @@
 #
 
 
-echo -e "Updating and installing Nginx.\n"
+#echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
          sudo apt-get install nginx -y
 
-echo -e "\nSetting up some minor stuff.\n"
+#echo -e "\nSetting up some minor stuff.\n"
 
 # starting nginx service
 sudo service nginx start
@@ -30,8 +30,11 @@ cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.b
 # Creating new index
 echo  "Hello World!" > /var/www/html/index.nginx-debian.html
 
-# Setting up /redirect_me to a youtube video
-sudo sed -i '/server_name _;/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-enabled/default
+if ! grep "location /redirect_me" /etc/nginx/sites-available/default; then
+    sudo sed -i '9i\    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
+else
+    sudo sed -i '/location \/redirect_me {/,/}/c\    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }' /etc/nginx/sites-available/default
+fi
 
 # Restarting nginx
 sudo service nginx reload
