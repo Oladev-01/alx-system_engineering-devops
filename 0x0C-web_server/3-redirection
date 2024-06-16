@@ -4,10 +4,12 @@
 # Serve a page that would return a Hello World string
 #
 
-if ! command -v nginx &>/dev/null; then
-    sudo apt-get update -y -qq && \
-    sudo apt-get install nginx -y
-fi
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
 
 # starting nginx service
 sudo service nginx start
@@ -23,7 +25,7 @@ sudo chmod -R 755 /var/www
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 # Creating new index
-echo -e "Hello World!" > /var/www/html/index.html
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 
 # Setting up /redirect_me to a youtube video
 sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
@@ -31,3 +33,4 @@ sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH
 # Restarting nginx
 sudo service nginx restart
 
+echo -e "\nCompleted.\n"
