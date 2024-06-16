@@ -28,7 +28,7 @@ sudo chmod -R 755 /var/www
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 # Creating new index
-echo  "Hello World!" > /var/www/html/index.html
+echo  "Hello World!" > /var/www/html/index.nginx-debian.html
 
 # Setting up /redirect_me to a youtube video
 sudo sed -i '/server_name _;/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' /etc/nginx/sites-available/default
