@@ -1,38 +1,24 @@
-# this puppet configures the nginx for redirection...
-# ensure nginx is installed
+# Setup New Ubuntu server with nginx
 
-$conf_file = '/etc/nginx/sites-enabled/default'
+exec { 'update system':
+    command => '/usr/bin/apt-get update',
+}
+
 package { 'nginx':
-    ensure => installed,
+    ensure  => 'installed',
+    require => Exec['update system']
 }
 
-# ensure the nginx config file exits
-file { $conf_file:
-    ensure => file,
-    notify => Service['nginx'],
+file {'/var/www/html/index.html':
+    content => 'Hello World!'
 }
 
-# ensure nginx is running and enabled
-service { 'nginx':
-    ensure    => running,
-    enable    => true,
-    require   => Package['nginx'],
-    subscribe => File[$conf_file],
+exec {'redirect_me':
+    command  => 'sed -i "24i\    rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+    provider => 'shell'
 }
 
-# ensure that the file for the landing page is present
-file { '/var/www/html/index.html':
-    ensure  => file,
-    content => 'Hello World!',
-    mode    => '0644',
-    notify  => Service['nginx'],
-}
-
-# executing the sed command to redirect
-exec { 'redirection':
-    command  => "sed -i '/server_name .*$/a \\n    location /redirect_me {\n        return 301 https://example.com/new-page;\n    }\n' ${conf_file}",
-    unless   => "/bin/grep -q 'location /redirect_me' ${conf_file}",
-    provider => 'shell',
-    require  => Package['nginx'],
-    notify   => Service['nginx'],
+service {'nginx':
+    ensure  => running,
+    require => Package['nginx']
 }
