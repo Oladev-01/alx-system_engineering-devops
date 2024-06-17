@@ -5,6 +5,14 @@ $conf_file = '/etc/nginx/sites-enabled/default'
 package { 'nginx':
     ensure => installed,
 }
+# ensure nginx is listening on port 80
+exec { 'listen_on_port_80':
+  command     => "/bin/bash -c \"sed -i 's|listen 80;|listen 80 default_server;|' ${conf_file}\"",
+  unless      => "/bin/grep -q 'listen 80 default_server;' ${conf_file}",
+  require     => Package['nginx'],
+  notify      => Service['nginx'],
+  environment => ['conf_file=/etc/nginx/sites-enabled/default'],
+}
 
 # ensure the nginx config file exits
 file { $conf_file:
@@ -32,15 +40,6 @@ file { '/var/www/html/index.html':
 exec { 'redirection':
   command     => "/bin/bash -c \"sed -i '/server_name _;/a \\\n    location /redirect_me {\\\\n        return 301 https://example.com/new-page;\\\\n    }\\\\n' ${conf_file}\"",
   unless      => "/bin/grep -q 'location /redirect_me' ${conf_file}",
-  require     => Package['nginx'],
-  notify      => Service['nginx'],
-  environment => ['conf_file=/etc/nginx/sites-enabled/default'],
-}
-
-# ensure nginx is listening on port 80
-exec { 'listen_on_port_80':
-  command     => "/bin/bash -c \"sed -i 's|listen 80;|listen 80 default_server;|' ${conf_file}\"",
-  unless      => "/bin/grep -q 'listen 80 default_server;' ${conf_file}",
   require     => Package['nginx'],
   notify      => Service['nginx'],
   environment => ['conf_file=/etc/nginx/sites-enabled/default'],
