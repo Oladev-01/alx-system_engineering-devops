@@ -32,11 +32,18 @@ exec { 'custom 404':
   command  => 'sed -i "/^\s*location \/ {$/a     error_page 404 /custom_404.txt;\n    location = /custom_404.txt {\\n        internal;\\n    }" /etc/nginx/sites-available/default',
   unless   => 'grep -q "error_page 404" /etc/nginx/sites-available/default',
   provider => 'shell',
-  require  => Package['nginx'], # Ensure Nginx is installed before running the sed command
+  require  => Package['nginx'],
 }
 file { '/etc/nginx/sites-available/default':
   ensure  => file,
   require => Package['nginx'],
+}
+exec { 'add_custom_header':
+  command => 'sed -i "/listen 80 .*$/a \\    add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
+  unless  => 'grep -q "add_header X-Served-By" /etc/nginx/sites-available/default',
+  provider => 'shell',
+  require => Package['nginx'],
+  notify  => Service['nginx'],
 }
 
 # Remove existing symlink if it exists
