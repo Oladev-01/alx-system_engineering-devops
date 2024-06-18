@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Configuring a server to serve as a round-robin load balancer with HAProxy
+
+# Update and upgrade the system
+sudo apt-get update
+sudo apt-get -y upgrade
+
+# Install HAProxy
+sudo apt-get -y install haproxy
+if [ $? -ne 0 ]; then
+    echo "Error installing HAProxy"
+    exit 1
+fi
+
+echo "Successfully installed HAProxy"
+
+# Configure HAProxy
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg > /dev/null
+# Global settings
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+# Default settings
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+    errorfile 400 /etc/haproxy/errors/400.http
+    errorfile 403 /etc/haproxy/errors/403.http
+    errorfile 408 /etc/haproxy/errors/408.http
+    errorfile 500 /etc/haproxy/errors/500.http
+    errorfile 502 /etc/haproxy/errors/502.http
+    errorfile 503 /etc/haproxy/errors/503.http
+    errorfile 504 /etc/haproxy/errors/504.http
+
+# Frontend configuration
+frontend http
+    bind *:80
+    default_backend my_backend
+
+# Backend configuration
+backend my_backend
+    balance roundrobin
+    server web01 523501-web-01:80 check # for web01
+    server web02 523501-web-02:80 check # for web02
+EOF
+
+echo "Successfully configured HAProxy"
+
+# Verify HAProxy configuration syntax
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c
+if [ $? -ne 0 ]; then
+    echo "Error: HAProxy configuration file syntax is invalid"
+    exit 1
+fi
+
+# Start and reload HAProxy service
+sudo service haproxy start
+sudo service haproxy reload
+
+echo "HAProxy service started and reloaded"
