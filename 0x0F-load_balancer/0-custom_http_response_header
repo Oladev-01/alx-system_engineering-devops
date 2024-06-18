@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# this script configures Nginx to add a custom reponse header
+
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get -y install nginx
+fi
+sudo service nginx start
+sudo sed -i '/listen 80 .*$/a    add_header X-Served_by $hostname;' /etc/nginx/sites-available/default
+
+sudo service nginx reload
