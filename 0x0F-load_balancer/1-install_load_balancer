@@ -52,8 +52,8 @@ frontend http
 # Backend configuration
 backend my_backend
     balance roundrobin
-    server web01 523501-web-01:80 check # for web01
-    server web02 523501-web-02:80 check # for web02
+    server 523501-web-01 34.232.72.189:80 check # for web01
+    server 523501-web-02 54.160.114.58:80 check # for web02
 EOF
 
 echo "Successfully configured HAProxy"
