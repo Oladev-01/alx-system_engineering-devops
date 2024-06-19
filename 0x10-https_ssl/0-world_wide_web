@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# this script accepts at most two args. the first arg is the domain name and the second args is the
+# the sub domain which is optional. Note: the first arg is mandatory. the script returns information
+# on all the subdomain under the domain if only parsed as argument or info on the subdomain parsed as
+# the second arg. 
+
+if [ $# -gt 2 ]; then
+    echo "Usage: ./0-world_wide_web <mandatory domain name> <optional subdomain>"
+    exit 1
+fi
+get_dns_info() {
+    local domain=$1; # local variable to store the domain arg
+    local subdomain=$2; # local variable to store the subdomain arg
+    local record=$(dig +short "$domain"); # local variable to store DNS record of the domain
+    local subrecord=$(dig +short "$subdomain"."$domain"); # local variable to store the DNS record of the domain
+    local subtype=$(dig +noall +answer "$subdomain"."$domain" | awk '{print $4}') # the type of dns record
+    echo "The subdomain $subdomain is a $subtype record and it points to $subrecord"
+
+}
+domain=$1
+subdomain=$2
+if [ -z "$subdomain" ]; then # checking if no subdomain is parsed or empty
+    subdomain=("www" "lb-01" "web-01" "web-02")
+    for sub in ${subdomain[@]}; do
+        get_dns_info $domain $sub
+    done
+else
+    get_dns_info $domain $subdomain
+fi
