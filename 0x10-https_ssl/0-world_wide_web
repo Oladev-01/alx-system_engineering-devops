@@ -14,7 +14,7 @@ get_dns_info() {
     local record=$(dig +short "$domain"); # local variable to store DNS record of the domain
     local subrecord=$(dig +short "$subdomain"."$domain"); # local variable to store the DNS record of the domain
     local subtype=$(dig +noall +answer "$subdomain"."$domain" | awk '{print $4}') # the type of dns record
-    echo "The subdomain $subdomain is a $subtype record and it points to $subrecord"
+    echo "The subdomain $subdomain is a $subtype record and points to $subrecord"
 
 }
 domain=$1
