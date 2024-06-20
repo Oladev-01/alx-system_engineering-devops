@@ -5,9 +5,9 @@
 echo "Checking for processes using port 80..."
 PID=$(sudo netstat -tulnp | grep :80 | awk '{ split($7, parts, "/"); print parts[1]}')
 
-if [ -n"$PID" ]; then
+if [ -n "$PID" ]; then
   echo "Found process using port 80: PID $PID. Stopping it..."
-  sudo kill $PID
+  sudo kill "$PID"
 else
   echo "No process found using port 80."
 fi
