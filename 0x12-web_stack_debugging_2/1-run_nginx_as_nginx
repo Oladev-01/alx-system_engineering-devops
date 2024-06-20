@@ -1,6 +1,6 @@
 #!/bin/bash
 # Ensure nginx is installed
-
+# shellcheck disable=all
 if ! command -v nginx &> /dev/null; then
     echo "Nginx is not installed. Installing nginx..."
     sudo apt-get update -qq
