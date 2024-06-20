@@ -1,16 +1,37 @@
-#!/usr/bin/env bash
-# this script changes nginx user from root to nginx
+#!/bin/bash
+# Ensure nginx is installed
 
-if ! command -v nginx; then
+if ! command -v nginx &> /dev/null; then
+    echo "Nginx is not installed. Installing nginx..."
     sudo apt-get update -qq
-    sudo apt-get -y install nginx
+    sudo apt-get install -y nginx
 fi
 
-# changing the user to nginx
-sed  's/user .*$/user nginx;/' etc/nginx/nginx.conf
-# making nginx listen on all ports
-sed 's/listen 80 .*$/listen 8080 default_server;/' etc/nginx/sites-available/default
-sed 's/listen \[::\]:80 .*$/listen \[::\]:8080 default_server;/' etc/nginx/sites-available/default
+# Create the nginx user if it doesn't exist
+if ! id -u nginx &> /dev/null; then
+    echo "Creating nginx user..."
+    sudo useradd --system --no-create-home --shell /bin/false nginx
+fi
 
+# Change the user in the nginx configuration file to 'nginx'
+sudo sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Change the listen port to 8080 in the default server block
+sudo sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sites-available/default
+sudo sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:8080 default_server;/' /etc/nginx/sites-available/default
+
+# Change the owner of the Nginx directories to the nginx user
 sudo chown -R nginx:nginx /var/log/nginx /var/lib/nginx /var/run/nginx.pid /var/cache/nginx /var/www/html
-sudo service nginx restart
+
+# Restart nginx to apply changes
+sudo systemctl restart nginx
+
+# Verify if nginx is running as the nginx user and on port 8080
+nginx_user=$(ps -eo uname,comm | grep nginx | grep -v root | awk '{print $1}')
+nginx_port=$(sudo netstat -tuln | grep ':8080' | awk '{print $4}')
+
+if [[ "$nginx_user" == "nginx" && "$nginx_port" == "0.0.0.0:8080" ]]; then
+    echo "Nginx is running as the nginx user and listening on port 8080."
+else
+    echo "Nginx is not configured correctly."
+fi
