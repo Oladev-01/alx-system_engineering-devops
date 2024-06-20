@@ -1,0 +1,9 @@
+Checking for processes using port 80...
+Found process using port 80: PID 171395
+171395. Stopping it...
+kill: failed to parse argument: '171395
+171395'
+Starting Nginx...
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+Nginx is now running.
