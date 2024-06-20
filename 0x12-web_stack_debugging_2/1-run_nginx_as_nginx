@@ -11,3 +11,6 @@ sed  's/user .*$/user nginx;/' etc/nginx/nginx.conf
 # making nginx listen on all ports
 sed 's/listen 80 .*$/listen 8080 default_server;/' etc/nginx/sites-available/default
 sed 's/listen \[::\]:80 .*$/listen \[::\]:8080 default_server;/' etc/nginx/sites-available/default
+
+sudo chown -R nginx:nginx /var/log/nginx /var/lib/nginx /var/run/nginx.pid /var/cache/nginx /var/www/html
+sudo service nginx restart
