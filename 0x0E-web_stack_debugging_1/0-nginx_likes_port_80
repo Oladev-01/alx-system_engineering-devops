@@ -3,20 +3,20 @@
 
 # Find the process using port 80 and stop it
 echo "Checking for processes using port 80..."
-PID=$(netstat -tulnp | grep :80 | awk '{ split($7, parts, "/"); print parts[1]}')
+PID=$(sudo netstat -tulnp | grep :80 | awk '{ split($7, parts, "/"); print parts[1]}')
 
 if [ -n"$PID" ]; then
   echo "Found process using port 80: PID $PID. Stopping it..."
-  kill $PID
+  sudo kill $PID
 else
   echo "No process found using port 80."
 fi
 
 # Start Nginx
 echo "Starting Nginx..."
-service nginx start
+sudo service nginx start
 # allowing the env to listen for nginx at port 80
-ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx HTTP'
 # Check Nginx status
 if service nginx status | grep -q "active (running)"; then
   echo "Nginx is now running."
