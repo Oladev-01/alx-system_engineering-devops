@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# this script creates an automated backup for the database
+
+if [ "$#" -ne 1 ]; then #password must be parsed as arg
+    echo "Usage ./5-mysql_backup <password>"
+    exit 1
+fi
+PWD=$1
+BCK_FILE="backup.sql"
+if ! mysqldump -u root -p"$PWD" --all-databases > "$BCK_FILE"; then
+    echo "mysqldump failed"
+fi
+CUR_DATE=$(date +'%d-%m-%Y') #getting the current date time in the format day-month-year
+ARCH_FILENAME="$CUR_DATE.tar.gz"
+if ! tar -czf "$ARCH_FILENAME" "$BCK_FILE"; then #creating the tar file of the dump
+    echo "failed to create archived file"
+    exit 1
+fi
+echo "archive successfully created"
