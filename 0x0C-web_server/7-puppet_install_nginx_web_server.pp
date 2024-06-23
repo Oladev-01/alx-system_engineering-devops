@@ -10,7 +10,7 @@ package { 'nginx':
 }
 # landing page
 file {'/var/www/html/index.html':
-    content => 'Hello World!',
+    content => 'Holberton School',
     require => Package['nginx'],
 }
 # custom page
