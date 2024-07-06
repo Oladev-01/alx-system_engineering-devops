@@ -14,8 +14,8 @@ def export_to_json(id):
     tasks = requests.get(f"{url}/todos?userId={id}")
     tasks_json = tasks.json()
     username = usr_info_json.get("username")
-    usr_data = []
-    usr_data.append({str(id):
+    usr_data = {}
+    usr_data.update({str(id):
                      [{"task": task.get('title'),
                        "completed": task.get('completed'),
                        "username": username} for task in tasks_json]})
