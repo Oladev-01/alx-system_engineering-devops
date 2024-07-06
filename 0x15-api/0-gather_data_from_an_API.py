@@ -18,8 +18,8 @@ def fetch_todo(id):
     done_list = [task for task in todo_info_formatted if task.get("completed")]
     completed = len(done_list)
     all_task = len(todo_info_formatted)
-    print(f"Employee {employee_name} is done with tasks
-          ({completed}/{all_task})")
+    print("Employee {} is done with tasks {}/{}"
+          .format(employee_name, completed, all_task))
     if done_list:
         for task in done_list:
             print(f"\t {task.get('title')}")
