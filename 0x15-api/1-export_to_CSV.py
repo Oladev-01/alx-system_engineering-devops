@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """exporting to csv"""
 
+import csv
 import requests
 import sys
-import csv
 
 
 def export_to_csv(id):
