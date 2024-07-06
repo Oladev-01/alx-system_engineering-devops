@@ -11,14 +11,14 @@ def fetch_todo(id):
     url = "https://jsonplaceholder.typicode.com/"
     id_info = requests.get(f"{url}/users/{id}")
     id_info_formatted = id_info.json()
-    todo_info = requests.get(f"{url}/todos?id={id}")
+    todo_info = requests.get(f"{url}/todos?userId={id}")
     todo_info_formatted = todo_info.json()
 
     employee_name = id_info_formatted.get("name")
     done_list = [task for task in todo_info_formatted if task.get("completed")]
     completed = len(done_list)
     all_task = len(todo_info_formatted)
-    print("Employee {} is done with tasks {}/{}"
+    print("Employee {} is done with tasks {}/{}:"
           .format(employee_name, completed, all_task))
     if done_list:
         for task in done_list:
