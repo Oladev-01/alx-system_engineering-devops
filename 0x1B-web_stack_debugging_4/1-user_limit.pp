@@ -2,6 +2,7 @@
 user {'holberton':
     ensure     => present,
     managehome => true,
+    password   => '1002',
     shell      => '/bin/bash',
     home       => '/home/holberton',
 }
