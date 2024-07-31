@@ -1,5 +1,15 @@
 # creating a new User
-exec {'creating holberton':
-    command => 'useradd -m holberton',
-    path    => ['/usr/bin', '/bin', '/usr/sbin'],
+user {'holberton':
+    ensure     => present,
+    managehome => true,
+    shell      => '/bin/bash',
+    home       => '/home/holberton',
+}
+
+file {'/home/holberton':
+    ensure  => directory,
+    owner   => 'holberton',
+    group   => 'holberton',
+    mode    => '0755',
+    require => User['holberton'],
 }
