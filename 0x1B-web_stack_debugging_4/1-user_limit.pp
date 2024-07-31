@@ -1,16 +1,10 @@
 # creating a new User
-user {'holberton':
-    ensure     => present,
-    managehome => true,
-    password   => '1002',
-    shell      => '/bin/bash',
-    home       => '/home/holberton',
+exec {'increasing hard limit for holberton':
+    command => "sed -i '/^holberton hard/s/[0-9]\\+/4096/' /etc/security/limits.conf",
+    path    => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
 }
 
-file {'/home/holberton':
-    ensure  => directory,
-    owner   => 'holberton',
-    group   => 'holberton',
-    mode    => '0755',
-    require => User['holberton'],
+exec {'increasing for soft limit':
+    command => "sed -i '/^holberton soft/s/[0-9]\\+/4096/' /etc/security/limits.conf",
+    path    => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
 }
